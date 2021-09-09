@@ -1,0 +1,26 @@
+    body {
+        background: url("/static/images/background.jpg") fixed no-repeat;
+    }
+
+    .card-body {
+        border: solid 1px red;
+        background-color: #f0f0f0;
+    }
+
+    #post, #my-post {
+        border: solid 1px black;
+    }
+
+    ul li {
+            display:inline;
+    }
+
+    .next, .logout{
+          color: red;
+    }
+
+    .nav-follow, .nav-post{
+        color: white;
+    }
+
+

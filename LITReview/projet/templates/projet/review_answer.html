@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{% if ticket %}
+    {% for info in ticket %}
+        {% if info == id %}
+
+<div class="col">
+      <div class="jumbotron">
+    <div class="container">
+    <h1>Ecrire une réponse à un ticket </h1>
+    </div>
+</div>
+
+
+<div class="card">
+            <div class="card-body">
+
+                <pre> Critique de :
+                    {{ info.titre }}
+
+                    {{ info.description}}
+                    {{ info.image}}</pre>
+                Utilisateur: {{ info.user }}
+            </div>
+            </div>
+            </div><br>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+
+  <form method="post">
+    {% csrf_token %}
+    {{ review.as_p }}<br>
+    <button type="submit" class="btn btn-secondary btn-lg btn-block">Répondre</button>
+  </form><br>
+
+{% endblock %}

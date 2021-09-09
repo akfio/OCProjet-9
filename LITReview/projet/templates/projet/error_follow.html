@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+<div class="card" id="error-follow">
+    <div class="card-body">
+<h1 class="card-title text-center" >Oups ! </h1>
+        <p>Il n'est malheureusement pas possible d'ajouter l'utilisateur si celui ci : </p>
+        <ol>
+            <li>Est vous-même !!</li>
+            <li>Fait déjà parti de la liste des utilisateurs suivis</li>
+            <li>L'username est incorrect</li>
+        </ol>
+    </div></div>
+{% endblock %}

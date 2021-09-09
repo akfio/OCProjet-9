@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+
+<div class="jumbotron text-center">
+    <div class="container">
+    <h1>Bienvenue sur ton feed {{ user.get_username }} </h1>
+    </div>
+</div>
+
+
+
+<div class="col">
+          <ul class="list-inline text-center">
+            <li class="list-inline-item"><form method="POST" action="{% url 'projet:review_ticket' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-secondary btn-lg btn-block">Nouvelle critique</button>
+  </form></li>
+            <li class="list-inline-item"> </li>
+            <li class="list-inline-item"><form method="POST" action="{% url 'projet:new-ticket' %}">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-secondary btn-lg btn-block">Nouveau ticket</button></form></li>
+</ul>
+
+
+
+</div><br>
+
+
+{% if posts %}
+{% for info in posts%}
+
+
+<div class="container" id="post">
+
+            {% if info.user == user %}
+
+        <div class="row" >
+
+            <ul>
+                <li><p> Vous avez publié: </p></li>
+                <li><p><strong>{{ info.titre }} </strong></p></li>
+                <li><p> {{ info.description }}</p></li>
+                {% if info.image %}
+                <img src="/{{ info.image }}" width="150" height="150" alt="ticket_img">
+                {% endif %}
+            </ul>
+        </div>
+
+            {% else %}
+
+        <div class="row">
+            <ul>
+                <li><p> Post de : {{ info.user }}</p></li>
+                <li><p><strong>{{ info.titre }} </strong></p></li>
+                <li><p> {{ info.description }}</p></li>
+                <li><p> {{ info.image }}</p></li>
+            </ul>
+            </div>
+
+        {% endif %}
+
+
+        {% if info.ticket %}
+        <div class="row">
+
+            {% if info.rating == 5 %}
+            &emsp;<img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            {% elif info.rating == 4 %}
+            &emsp;<img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            {% elif info.rating == 3 %}
+            &emsp;<img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            {% elif info.rating == 2 %}
+            &emsp;<img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            {% elif info.rating == 1 %}
+            &emsp;<img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            {% elif info.rating == 0 %}
+            &emsp;<img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+
+            {% endif %}
+
+            &emsp; <p>{{ info.headline }} </p>
+        </div>
+
+        <div class="col">
+            <p> {{ info.body }}</p>
+            <div class="card">
+            <div class="card-body">
+                <pre> Critique de :
+                    {{ info.ticket }}</pre>
+            </div>
+            </div>
+            </div>
+           {% endif %}
+                <p> {{ info.time_created }}</p>
+
+
+{% if info.user != user%}
+    {% if info.titre %}
+        {% if info not in exist %}
+    <div class="col">
+        <div class="list-inline text-center">
+            <form method="POST" action="{% url 'projet:answer' info.id %}">
+              {% csrf_token %}
+                <button type="submit" class="btn btn-secondary btn-md btn-block" id="answer">
+                    Répondre au ticket </button></form>
+             </div></div><br>
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+
+</div><br>
+{% endfor %}
+{% endif %}
+
+{% else %}
+     <a href="{% url 'login'%}?next={{request.path}}">Login</a>
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="/static/CSS/style.css" />
+
+    {% block title %}<title>LITReview</title>{% endblock %}
+
+
+</head>
+
+<body>
+
+<div class="bg-dark">
+   <div class="container">
+      <div class="row">
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+   <a class="navbar-brand" href="{% url 'index'%}">LITReview</a>
+      </nav>
+      </div>
+   </div>
+</div><br>
+
+{% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.</p>
+    {% else %}
+
+    {% endif %}
+  {% endif %}
+
+<div class="container">
+<div class="row justify-content-center align-items-center" >
+
+  <div class="col-6">
+    <p class="text-center">Inscrivez-vous</p>
+    <form method="post" action="{% url 'signup' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-secondary btn-lg btn-block">Créer un compte</button>
+    </form>
+  </div>
+
+
+  <div class="col-6">
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      <table>
+        <tr>
+          <td>{{ form.username.label_tag }}</td>
+          <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+          <td>{{ form.password.label_tag }}</td>
+          <td>{{ form.password }}</td>
+        </tr>
+      </table><br>
+      <input type="submit" class="btn btn-secondary btn-lg btn-block" value="Se connecter" />
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+
+  </div>
+
+
+
+  </div>
+</div></body>
+</html>

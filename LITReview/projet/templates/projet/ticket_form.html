@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="jumbotron text-center">
+    <div class="container">
+    <h1>Créer un ticket </h1>
+    </div>
+</div>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}<br>
+    <button type="submit" class="btn btn-secondary btn-lg btn-block" action="{% url 'projet:flux' %}">create</button>
+  </form><br>
+
+
+{% endblock %}

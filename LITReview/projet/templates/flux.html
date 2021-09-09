@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="jumbotron text-center">
+    <h1>Mes Posts</h1>
+</div>
+
+<form method="POST" action="{% url 'projet:review_ticket' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-secondary btn-lg btn-block">Nouvelle critique</button>
+  </form><br>
+
+{% if posts %}
+    {% for info in posts%}
+
+<div class="container" id="my-post">
+
+    {% if info.titre %}
+    <div class="row" >
+        <ul>
+            <li><p><br><strong> {{ info.titre }} </strong><br></p></li>
+            <li><p>{{ info.description }}</p></li>
+            {% if info.image %}
+                <img src="/{{ info.image }}" width="150" height="150" alt="ticket_img">
+            {% endif %}
+        </ul></div>
+
+
+    {% endif %}
+
+    {% if info.ticket %}
+    <br>
+    <div class="row">
+
+            {% if info.rating == 5 %}
+            &emsp;<img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            {% elif info.rating == 4 %}
+            &emsp;<img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            {% elif info.rating == 3 %}
+            &emsp;<img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            {% elif info.rating == 2 %}
+            &emsp;<img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            {% elif info.rating == 1 %}
+            &emsp;<img src="/static/images/star.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            {% elif info.rating == 0 %}
+            &emsp;<img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+            <img src="/static/images/vide.svg" width="22" height="22" alt="star">
+
+            {% endif %}
+            &emsp; <p>{{ info.headline }}</p>
+    </div>
+
+    <div class="col">
+    <p> {{ info.body }}</p>
+    <div class="card">
+    <div class="card-body">
+
+        <pre> Critique de :
+            {{ info.ticket }}</pre>
+
+    </div>
+    </div>
+    </div><br>
+   {% endif %}
+
+
+
+
+
+
+
+<div class="col">
+       {% if info.titre %}
+     <ul class="list-inline text-right">
+        <li class="list-inline-item"><form method="GET" action="{% url 'projet:update-ticket' info.id %}">
+          {% csrf_token %}
+            <button type="submit" class="btn btn-secondary btn-md">Modifier le ticket</button></form></li>
+
+        <li class="list-inline-item"><form method="POST" action="{% url 'projet:delete-ticket' info.id %}">
+          {% csrf_token %}
+            <button type="submit" class="btn btn-secondary btn-md">Supprimer le ticket</button></form></li>
+     </ul>
+        {% elif info.ticket %}
+    <ul class="list-inline text-right">
+        <li class="list-inline-item"><form method="GET" action="{% url 'projet:update-review' info.id %}">
+            <button type="submit" class="btn btn-secondary btn-md">Modifier la review</button></form></li>
+
+        <li class="list-inline-item"><form method="POST" action="{% url 'projet:delete-review' info.id %}">
+          {% csrf_token %}
+            <button type="submit" class="btn btn-secondary btn-md">Supprimer la review</button></form></li>
+        </ul>
+         {% endif %}
+
+</div>
+    <p> {{ info.time_created }}</p>
+    </div>
+
+
+    {% endfor %}
+{% endif %}
+
+
+{% endblock %}

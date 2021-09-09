@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron text-center">
+    <h1>Follows</h1>
+</div>
+
+
+
+<form method="post" id="add_follow">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" class="btn btn-secondary btn-sm">Ajouter</button>
+  </form><br>
+
+
+<div class="card">
+    <div class="card-body">
+<h2 class="card-title text-center" >Abonnements</h2>
+      {% if following_list %}
+    {% for follow in following_list %}
+        <div class=”list-inline”>
+        <ul class="col">
+        <li><p class="list-inline-item">{{ follow.followed_user}}</p>
+        <form method="POST" action="{% url 'projet:delete-follow' follow.id %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-secondary btn-sm">Unfollow</button>
+  </form></li></ul>
+      <br></div>
+            {% endfor %}
+            {% endif %}
+
+  <br>
+            <div class="pagination justify-content-center">
+        {% if following_list.has_previous %}
+                <a class="page-link" href="?page={{ following_list.previous_page_number }}" aria-label="Previous">
+                <span class="next" aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+                </a>
+        {% endif %}
+
+        {% if following_list.has_next %}
+                <a class="page-link" href="?page={{ following_list.next_page_number }}" aria-label="Next">
+                <span class="next" aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+                </a>
+        {% endif %}
+</div>
+    </div>
+</div>
+<br>
+
+<div class="card">
+    <div class="card-body">
+            <h2 class="card-title text-center">Abonnés</h2>
+    {% if follower_list %}
+    {% for follow in follower_list %}
+        <div class=”list-inline”>
+            <ul class="col">
+                <li><p class="list-inline-item">{{ follow.user}}</p></li></ul>
+        </div>
+    {% endfor %}
+{% endif %}
+
+  <br>
+        <div class="pagination justify-content-center">
+        {% if follower_list.has_previous %}
+                <a class="page-link" href="?page={{ follower_list.previous_page_number }}" aria-label="Previous">
+                <span class="next" aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+                </a>
+        {% endif %}
+
+        {% if follower_list.has_next %}
+                <a class="page-link" href="?page={{ follower_list.next_page_number }}" aria-label="Next">
+                <span class="next" aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+                </a>
+        {% endif %}
+    </div>
+    </div></div><br>
+
+
+
+{% endblock %}
