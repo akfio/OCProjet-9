@@ -22,7 +22,9 @@
                     {{ info.titre }}
 
                     {{ info.description}}
-                    {{ info.image}}</pre>
+                    {% if info.image %}
+                <img src="/{{ info.image }}" width="150" height="150" alt="ticket_img">
+                {% endif %}</pre>
                 Utilisateur: {{ info.user }}
             </div>
             </div>
