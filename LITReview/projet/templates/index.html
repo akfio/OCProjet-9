@@ -57,7 +57,9 @@
                 <li><p> Post de : {{ info.user }}</p></li>
                 <li><p><strong>{{ info.titre }} </strong></p></li>
                 <li><p> {{ info.description }}</p></li>
-                <li><p> {{ info.image }}</p></li>
+                {% if info.image %}
+                <img src="/{{ info.image }}" width="150" height="150" alt="ticket_img">
+                {% endif %}
             </ul>
             </div>
 
