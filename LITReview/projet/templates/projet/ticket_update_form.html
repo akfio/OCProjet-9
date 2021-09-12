@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Modifier le ticket</h2>
+
+<div class="col">
+      <div class="jumbotron">
+    <div class="container">
+    <h1>Modifier le ticket </h1>
+    </div>
+      </div></div>
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
