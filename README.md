@@ -36,5 +36,5 @@ Dans le dossier du projet LITReview saisissez :
 python3 manage.py runserver
 ```
 
-Vous pouvez ensuite lancer le serveur via l'addresse afficher sur votre console 
+Vous pouvez ensuite lancer le serveur via l'addresse affichée sur votre console 
 
